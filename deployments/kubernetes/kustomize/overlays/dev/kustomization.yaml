@@ -1,0 +1,10 @@
+bases:
+  - ../../base
+
+patchesStrategicMerge:
+  - ./django-patch.yaml
+
+configMapGenerator:
+  - name: dev-config
+    files:
+      - dev.properties

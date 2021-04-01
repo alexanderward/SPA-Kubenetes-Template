@@ -1,0 +1,15 @@
+bases:
+  - ../../base
+
+resources:
+  - django/local-volume.yaml
+  - django/local-volume-claim.yaml
+
+patchesStrategicMerge:
+  - ./django-patch.yaml
+
+
+configMapGenerator:
+  - name: local-config
+    files:
+      - local.properties

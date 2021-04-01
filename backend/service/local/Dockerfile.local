@@ -1,0 +1,30 @@
+FROM python:3.7.4-alpine3.10
+
+ADD requirements /app/requirements
+
+RUN apk add --update zip
+RUN apk add --update p7zip
+RUN apk add --update openssh-server
+RUN apk add openssh-sftp-server
+RUN rm -rf /var/cache/apk/* /tmp/*
+RUN set -ex \
+    && python -m venv /env \
+    && /env/bin/pip install --upgrade pip \
+    && /env/bin/pip install --no-cache-dir -r /app/requirements/dev.txt \
+    && 7z a /tmp/venv.7z /env/ -mx1 -mmt=256
+RUN echo "root:root" | chpasswd && \
+  mkdir /var/run/sshd
+
+# SSH setting
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+RUN ssh-keygen -A
+
+WORKDIR /app/backend/service
+
+
+ENV VIRTUAL_ENV /env
+ENV PATH /env/bin:$PATH
+
+EXPOSE 8000
+ENTRYPOINT ["/bin/sh", "/app/backend/service/local/entrypoint.local.sh"]
+

@@ -1,0 +1,67 @@
+apiVersion: skaffold/v2beta13
+kind: Config
+
+metadata:
+  name: kubernetes-local
+
+build:
+  artifacts:
+  - image: django-app-image
+    context: backend/service
+    docker:
+      dockerfile: Dockerfile
+
+
+
+#    requires:
+#  - image: alexanderward/react-test
+#      context: frontend
+#      docker:
+#        dockerfile: Dockerfile
+
+deploy:
+  kustomize:
+    paths:
+      - deployments/kubernetes/kustomize/base
+
+
+
+profiles:
+  - name: local
+    patches:
+      - op: replace
+        path: /build/artifacts/0/docker/dockerfile
+        value: local/Dockerfile.local
+
+    build:
+      local:
+        push: false
+
+    deploy:
+      kustomize:
+        paths:
+          - deployments/kubernetes/kustomize/overlays/local
+
+    portForward:
+      - resourceType: service
+        resourceName: django
+        port: 8000
+        localPort: 8000
+
+  - name: dev
+    deploy:
+      kustomize:
+        paths:
+          - deployments/kubernetes/kustomize/overlays/dev
+
+  - name: staging
+    deploy:
+      kustomize:
+        paths:
+          - deployments/kubernetes/kustomize/overlays/staging
+
+  - name: prod
+    deploy:
+      kustomize:
+        paths:
+          - deployments/kubernetes/kustomize/overlays/prod
