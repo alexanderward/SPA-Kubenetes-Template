@@ -7,7 +7,10 @@
 # Development Environments
 
 ## Run
-- `./run.sh`
+ Available stacks are `local, dev, staging, prod` 
+- `./run.sh <stack>`
+    - `local` will run skaffold in development mode allowing port-forwarding and filesync
+    - `dev, staging, prod` will create the stack normally
 
 ## Debugging
 For the purposes of interactive debugging:
