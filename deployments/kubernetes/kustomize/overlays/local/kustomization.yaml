@@ -6,10 +6,18 @@ resources:
   - django/local-volume-claim.yaml
 
 patchesStrategicMerge:
-  - ./django-patch.yaml
+  - ./django/django-patch.yaml
 
 
 configMapGenerator:
-  - name: local-config
-    files:
-      - local.properties
+  - name: django-config
+    behavior: merge
+    literals:
+      - DEBUG=True
+      - ALLOWED_HOSTS=['*']
+      - DJANGO_SETTINGS_MODULE=service.settings.local
+
+secretGenerator:
+- name: django-secrets
+  files:
+  - SECRET_KEY=./django/secrets/SECRET_KEY.txt

@@ -16,8 +16,10 @@ RUN echo "root:root" | chpasswd && \
   mkdir /var/run/sshd
 
 # SSH setting
-RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
-RUN ssh-keygen -A
+#RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+#RUN ssh-keygen -A
+COPY local/ssh /etc/ssh
+RUN chmod -R 400 /etc/ssh
 
 WORKDIR /app/backend/service
 

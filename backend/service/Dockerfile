@@ -3,7 +3,7 @@ FROM python:3.8.8-alpine3.13
 ADD requirements /app/requirements
 
 RUN set -ex \
-    && apk add --no-cache --virtual .build-deps postgresql-dev build-base \
+    && apk add --no-cache --virtual .build-deps postgresql-dev build-base redis\
     && python -m venv /env \
     && /env/bin/pip install --upgrade pip \
     && /env/bin/pip install --no-cache-dir -r /app/requirements/prod.txt \
