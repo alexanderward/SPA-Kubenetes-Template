@@ -2,15 +2,14 @@ FROM python:3.7.4-alpine3.10
 
 ADD requirements /app/requirements
 
-RUN apk add --update postgresql-dev postgresql-client zip p7zip openssh-server openssh-sftp-server gcc python3-dev \
+RUN apk add --update postgresql-dev postgresql-client openssh-server openssh-sftp-server gcc python3-dev \
     musl-dev \
     &&  rm -rf /var/cache/apk/* /tmp/*
 
 RUN set -ex \
     && python -m venv /env \
     && /env/bin/pip install --upgrade pip \
-    && /env/bin/pip install --no-cache-dir -r /app/requirements/dev.txt \
-    && 7z a /tmp/venv.7z /env/ -mx1 -mmt=256
+    && /env/bin/pip install --no-cache-dir -r /app/requirements/dev.txt
 
 RUN echo "root:root" | chpasswd && \
   mkdir /var/run/sshd

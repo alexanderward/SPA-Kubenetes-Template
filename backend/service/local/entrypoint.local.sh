@@ -10,10 +10,6 @@ echo -ne "${yel}[ + ] Setting up SSH for remote Interpreter use \n${end}"
 /usr/sbin/sshd
 export -p > local/remote_interpreter/env_var.sh
 
-echo -ne "${yel}[ + ] Copying Dependencies for IDE use \n${end}"
-rm local/venv.7z
-cp /tmp/venv.7z local/venv.7z
-
 echo -ne "${yel}[ + ] Collect Static Files for Admin Panel \n${end}"
 python manage.py collectstatic --noinput
 
