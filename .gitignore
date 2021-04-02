@@ -4,3 +4,4 @@ venv.7z
 .idea
 backend/service/static
 __pycache__
+secrets

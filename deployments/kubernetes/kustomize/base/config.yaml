@@ -5,12 +5,5 @@ metadata:
 data:
   DEBUG: "False"
   ALLOWED_HOSTS: "[]"
-
----
-#
-#apiVersion: v1
-#kind: ConfigMap
-#metadata:
-#  name: redis-config
-#data:
-#  PORT: 6379
+  DATABASE_ENGINE: "django.db.backends.postgresql_psycopg2"
+  DATABASE_PORT: "5432"

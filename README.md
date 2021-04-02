@@ -4,7 +4,13 @@
 - `skaffold` - Skaffold is a command line tool that facilitates continuous development for Kubernetes-native applications (https://skaffold.dev/docs/install/)
 - `kustomize` - simplifies the use of off-the-shelf applications. Now, built into `kubectl as apply -k`.
 
-# Development Environments
+# Development Environment
+
+## Setup
+In order to deploy your stack, it must have it's secrets configured.
+- `cd deployments/kubernetes`
+- `python generate_secrets.py`
+- Follow the prompts and supply required information about your stack.
 
 ## Run
  Available stacks are `local, dev, staging, prod` 
@@ -13,6 +19,7 @@
     - `dev, staging, prod` will create the stack normally
 
 ## Debugging
+##### Pod debugging
 For the purposes of interactive debugging:
 - `./debug --pod=<pod_name> --attach`
 
@@ -25,6 +32,11 @@ Examples:
 - `./debug.sh --pod=django --command="ls /app"`
 - `./debug.sh --pod=django --command="python manage.py shell"`
 
+##### Wiping Database Data
+The postgres database data is persisted in our `minikube` cluster.
+- `ssh minikube -- sudo rm -rf /data/pgdata`
+- Then restart the `./run.sh` to build the new database.
+
 ## IDE Interpreter Steps
 
 
@@ -36,7 +48,6 @@ Examples:
     - User: `root`
     - Password: `root`
     - Interpreter: `/app/backend/service/local/remote_interpreter/python_env.sh`
-    - Automatically upload project files to server: `Uncheck`
 
 ##### Manual Interpreter
 **Unfortunately this is a manual process that must be done every time your backend dependencies change.**

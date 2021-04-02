@@ -4,7 +4,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DIR = os.path.dirname(os.path.dirname(BASE_DIR))
 SECRET_KEY = os.environ['SECRET_KEY']
-DEBUG = eval(os.environ['DEBUG'])
+DEBUG = False
 ALLOWED_HOSTS = eval(os.environ['ALLOWED_HOSTS'])
 
 # Application definition
@@ -49,13 +49,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'service.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(APP_DIR, 'local', 'db.sqlite3'),
-    }
-}
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -90,6 +83,20 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(APP_DIR, 'static')
+
+# POSTGRES
+DATABASES = {
+        'default': {
+            'ENGINE': os.environ['DATABASE_ENGINE'],
+            'NAME': os.environ['DATABASE_NAME'],
+            'USER': os.environ['DATABASE_USER'],
+            'PASSWORD': os.environ['DATABASE_PASSWORD'],
+            'HOST': os.environ['DATABASE_HOST'],
+            'PORT': os.environ['DATABASE_PORT'],
+            'ATOMIC_REQUESTS': True
+        },
+    }
+
 
 # REDIS
 REDIS_URL = "redis://{host}:{port}/0".format(

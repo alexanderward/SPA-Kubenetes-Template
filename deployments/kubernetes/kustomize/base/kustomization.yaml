@@ -7,3 +7,7 @@ resources:
   - django/deployment.yaml
   - redis/service.yaml
   - redis/deployment.yaml
+  - postgres/service.yaml
+  - postgres/statefulset.yaml
+  - postgres/volume.yaml
+  - postgres/volume-claim.yaml

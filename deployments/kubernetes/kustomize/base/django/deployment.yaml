@@ -12,6 +12,12 @@ spec:
       labels:
         app: django
     spec:
+      initContainers:
+        - name: check-db-ready
+          image: postgres:13
+          command: ['sh', '-c',
+                    'until pg_isready -h postgres-service -p 5432;
+                do echo waiting for database; sleep 5; done;']
       containers:
         - name: django-app
           image: django-app-image
@@ -22,17 +28,29 @@ spec:
           - configMapRef:
               name: django-config
           env:
+            - name: DATABASE_HOST
+              value: postgres-service
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: stack-secrets
+                  key: DATABASE_NAME
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: stack-secrets
+                  key: DATABASE_USER
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: stack-secrets
+                  key: DATABASE_PASSWORD
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: django-secrets
+                  name: stack-secrets
                   key: SECRET_KEY
             - name: REDIS_PORT
               value: "6379"
             - name: REDIS_HOST
               value: redis-service
-#            - name: ALLOWED_HOSTS
-#                valueFrom:
-#                  configMapKeyRef:
-#                    name: django-config
-#                    key: ALLOWED_HOSTS

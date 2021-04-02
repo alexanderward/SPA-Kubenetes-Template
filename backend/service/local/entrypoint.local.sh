@@ -1,16 +1,24 @@
-echo "[ + ] Setting up SSH for remote Interpreter use"
+red=$'\e[1;31m'
+grn=$'\e[1;32m'
+yel=$'\e[1;33m'
+blu=$'\e[1;34m'
+mag=$'\e[1;35m'
+cyn=$'\e[1;36m'
+end=$'\e[0m'
+
+echo -ne "${yel}[ + ] Setting up SSH for remote Interpreter use \n${end}"
 /usr/sbin/sshd
 export -p > local/remote_interpreter/env_var.sh
 
-echo "[ + ] Copying Dependencies for IDE use"
+echo -ne "${yel}[ + ] Copying Dependencies for IDE use \n${end}"
 rm local/venv.7z
 cp /tmp/venv.7z local/venv.7z
 
-echo "[ + ] Collect Static Files for Admin Panel"
+echo -ne "${yel}[ + ] Collect Static Files for Admin Panel \n${end}"
 python manage.py collectstatic --noinput
 
-echo "[ + ] Migrating Database"
+echo -ne "${yel}[ + ] Migrating Database \n${end}"
 python manage.py migrate --noinput
 
-echo "[ + ] Starting server"
+echo -ne "${yel}[ + ] Starting server \n${end}"
 python manage.py runserver 0.0.0.0:8000

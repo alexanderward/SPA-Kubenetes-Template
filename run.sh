@@ -28,7 +28,10 @@ if [[ $? = 1 ]]; then
    exit
 fi
 
-
+if [[ ! -d "deployments/kubernetes/kustomize/overlays/${STACK}/secrets" ]]; then
+    echo -ne "${red}[x] ${STACK} has not had it's secrets configured. Goto the Setup section in the README \n${end}"
+	exit
+fi
 
 echo -ne "${grn}[+]Starting Minikube\n${end}"
 minikube start --v=4 --mount --mount-string="$PWD:/local-data/"  --cpus 4 --memory 8192
@@ -38,7 +41,7 @@ skaffold delete
 
 echo -ne "${grn}[+]Starting Skaffold - ${STACK}\n${end}"
 if [[ ${STACK} = "local" ]]; then
-   skaffold dev --no-prune=false --cache-artifacts=false -p local --port-forward --trigger polling #-vtrace
+   skaffold dev --no-prune=true --cache-artifacts=true -p local --port-forward --trigger polling #-vtrace
 else
   skaffold run --no-prune=false --cache-artifacts=false -p ${STACK}
 fi

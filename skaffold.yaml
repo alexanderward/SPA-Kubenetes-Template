@@ -12,7 +12,6 @@ build:
       dockerfile: Dockerfile
 
 
-
 #    requires:
 #  - image: alexanderward/react-test
 #      context: frontend

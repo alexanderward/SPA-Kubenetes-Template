@@ -7,17 +7,20 @@ resources:
 
 patchesStrategicMerge:
   - ./django/django-patch.yaml
+  - ./postgres/postgres-patch.yaml
 
 
 configMapGenerator:
   - name: django-config
     behavior: merge
     literals:
-      - DEBUG=True
       - ALLOWED_HOSTS=['*']
       - DJANGO_SETTINGS_MODULE=service.settings.local
 
 secretGenerator:
-- name: django-secrets
+- name: stack-secrets
   files:
-  - SECRET_KEY=./django/secrets/SECRET_KEY.txt
+  - SECRET_KEY=./secrets/SECRET_KEY.txt
+  - DATABASE_NAME=./secrets/DATABASE_NAME.txt
+  - DATABASE_USER=./secrets/DATABASE_USER.txt
+  - DATABASE_PASSWORD=./secrets/DATABASE_PASSWORD.txt

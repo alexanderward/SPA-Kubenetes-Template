@@ -17,3 +17,4 @@ djangorestframework-simplejwt==4.0.0
 redis
 django-redis
 celery
+psycopg2
