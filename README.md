@@ -15,7 +15,7 @@ In order to deploy your stack, it must have it's secrets configured.
 ## Run
  Available stacks are `local, dev, staging, prod` 
 - `./run.sh <stack>`
-    - `local` will run skaffold in development mode allowing port-forwarding and filesync
+    - `local` will run minikube for a local cluster (development mode)
     - `dev, staging, prod` will create the stack normally
 
 ## Debugging
