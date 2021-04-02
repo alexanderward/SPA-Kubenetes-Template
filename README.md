@@ -19,7 +19,7 @@ In order to deploy your stack, it must have it's secrets configured.
     - `dev, staging, prod` will create the stack normally
 
 ## Debugging
-##### Pod debugging
+#### Pod debugging
 For the purposes of interactive debugging:
 - `./debug --pod=<pod_name> --attach`
 
@@ -29,19 +29,19 @@ For the purposes of sending commands to the pod:
 Examples:
 - `./debug.sh --pod=django --attach`
 - `./debug.sh --pod=django --command="/bin/sh"`
-- `./debug.sh --pod=django --command="ls /app"`
 - `./debug.sh --pod=django --command="python manage.py shell"`
+- `./debug.sh --pod=redis --command="/bin/bash"`
+- `./debug.sh --pod=postgres --command="/bin/bash"`
 
-##### Wiping Database Data
+#### Wiping Database Data
 The postgres database data is persisted in our `minikube` cluster.
 - `ssh minikube -- sudo rm -rf /data/pgdata`
 - Then restart the `./run.sh` to build the new database.
 
 ## IDE Interpreter Steps
 
-
 ### Pycharm
-##### Automated Sync via SSH Interpreter
+#### Automated Sync via SSH Interpreter
 - `File -> Settings -> Project -> Project Interpreter  -> Cog -> Add -> SSH Interpreter`
     - Host: `localhost`
     - Port: `2222`
@@ -49,11 +49,17 @@ The postgres database data is persisted in our `minikube` cluster.
     - Password: `root`
     - Interpreter: `/app/backend/service/local/remote_interpreter/python_env.sh`
 
-##### Manual Interpreter
-**Unfortunately this is a manual process that must be done every time your backend dependencies change.**
-  
-  The speed of extracting files to/from the `minikube` local volume  is just way too slow to be practical.
-  Will look into making it an external process to make this step automated.
+### VIM
+#### Option 1
+- `./debug.sh --pod=django --command="/bin/sh"` - Connect to the Django container directly to code.
+- Code is synced via the `minikube` volume in realtime.  Your code changes will be reflected on the host and will not be lost.
 
-- Use 7Zip to unzip `backend/service/local/venv.7z`
-- `File -> Settings -> Project -> Project Interpreter -> Cog -> Add` - Add or update to your unziped `env` folder
+#### Option 2
+- Install `sshpass` or configure a way to pass your password to `ssh`
+- Create an alias:
+    * `alias pythonremote='sshpass -p "root" ssh root@127.0.0.1 -p2222 "/app/backend/service/local/remote_interpreter/python_env.sh -u"'`
+- Issue a command:
+    * `pythonremote /app/deployments/kubernetes/generate_secrets.py`
+    * `pythonremote /app/backend/service/manage.py shell`
+
+
