@@ -16,5 +16,5 @@ djangorestframework-simplejwt==4.0.0
 
 redis
 django-redis
-celery
+celery[redis]
 psycopg2

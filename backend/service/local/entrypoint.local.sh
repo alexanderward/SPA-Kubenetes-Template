@@ -14,7 +14,8 @@ echo -ne "${yel}[ + ] Collect Static Files for Admin Panel \n${end}"
 python manage.py collectstatic --noinput
 
 echo -ne "${yel}[ + ] Migrating Database \n${end}"
+python manage.py makemigrations --noinput
 python manage.py migrate --noinput
 
 echo -ne "${yel}[ + ] Starting server \n${end}"
-python manage.py runserver 0.0.0.0:8000
+python manage.py runserver   0.0.0.0:8000

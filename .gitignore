@@ -1,6 +1,6 @@
 venv
 db.sqlite3
-venv.7z
+.pyc
 .idea
 backend/service/static
 __pycache__

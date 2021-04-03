@@ -1,10 +1,10 @@
-## Install (All Cross Platform)
+# Install (All Cross Platform)
 - `docker` - OS-level virtualization to deliver software in packages called containers - (https://docs.docker.com/get-docker/)
 - `minikube` - Local Kubernetes cluster - (https://minikube.sigs.k8s.io/docs/start/)
 - `skaffold` - Skaffold is a command line tool that facilitates continuous development for Kubernetes-native applications (https://skaffold.dev/docs/install/)
 - `kustomize` - simplifies the use of off-the-shelf applications. Now, built into `kubectl as apply -k`.
 
-# Development Environment
+# Developer Environment
 
 ## Setup
 In order to deploy your stack, it must have it's secrets configured.
@@ -20,23 +20,23 @@ In order to deploy your stack, it must have it's secrets configured.
 
 ## Debugging
 #### Pod debugging
-For the purposes of interactive debugging:
-- `./debug --pod=<pod_name> --attach`
+| Commands                                         | Description                                                            |
+|--------------------------------------------------|------------------------------------------------------------------------|
+| `./debug --pod=<pod_name> --attach`              | Attach to TTY - interactive debugging (ipdb)                           |
+| `./debug --pod=<pod_name> --command="<comamnd>"` | Sending commands to the pod                                            |
+| `./debug --pod=<pod_name> --restart`             | Restarts Pod                                                           |
+| `./debug --pod=<pod_name> --logs`                | Tails the logs of the pods                                             |
+| `./debug --wipedb`                               | Wipe the Database for a fresh state; *Good to do after a pull or merge |
 
-For the purposes of sending commands to the pod:
-- `./debug --pod=<pod_name> --command="my command"`
 
 Examples:
 - `./debug.sh --pod=django --attach`
+- `./debug.sh --pod=django --restart`
+- `./debug.sh --pod=django --logs`
 - `./debug.sh --pod=django --command="/bin/sh"`
 - `./debug.sh --pod=django --command="python manage.py shell"`
 - `./debug.sh --pod=redis --command="/bin/bash"`
 - `./debug.sh --pod=postgres --command="/bin/bash"`
-
-#### Wiping Database Data
-The postgres database data is persisted in our `minikube` cluster.
-- `ssh minikube -- sudo rm -rf /data/pgdata`
-- Then restart the `./run.sh` to build the new database.
 
 ## IDE Interpreter Steps
 

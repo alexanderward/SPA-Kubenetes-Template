@@ -50,7 +50,7 @@ spec:
           volumeMounts:
             - name: postgres-volume-mount
               mountPath: /var/lib/postgresql/data
-              subPath: pgdata
+              subPath: postgres
           readinessProbe:
             exec:
               command:
