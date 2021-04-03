@@ -20,13 +20,13 @@ In order to deploy your stack, it must have it's secrets configured.
 
 ## Debugging
 #### Pod debugging
-| Commands                                         | Description                                                            |
-|--------------------------------------------------|------------------------------------------------------------------------|
-| `./debug --pod=<pod_name> --attach`              | Attach to TTY - interactive debugging (ipdb)                           |
-| `./debug --pod=<pod_name> --command="<comamnd>"` | Sending commands to the pod                                            |
-| `./debug --pod=<pod_name> --restart`             | Restarts Pod                                                           |
-| `./debug --pod=<pod_name> --logs`                | Tails the logs of the pods                                             |
-| `./debug --wipedb`                               | Wipe the Database for a fresh state; *Good to do after a pull or merge |
+| Commands                                            | Description                                                             |
+|-----------------------------------------------------|-------------------------------------------------------------------------|
+| `./debug.sh --pod=<pod_name> --attach`              | Attach to TTY - interactive debugging (ipdb)                            |
+| `./debug.sh --pod=<pod_name> --command="<comamnd>"` | Sending commands to the pod                                             |
+| `./debug.sh --pod=<pod_name> --restart`             | Restarts Pod                                                            |
+| `./debug.sh --pod=<pod_name> --logs`                | Tails the logs of the pods                                              |
+| `./debug.sh --wipedb`                               | Wipe the Database for a fresh state; \*Good to do after a pull or merge |
 
 
 Examples:
