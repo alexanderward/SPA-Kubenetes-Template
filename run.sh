@@ -34,7 +34,7 @@ if [[ ! -d "deployments/kubernetes/kustomize/overlays/${STACK}/secrets" ]]; then
 fi
 
 echo -ne "${grn}[+]Starting Minikube\n${end}"
-minikube start --v=4 --mount --mount-string="$PWD:/local-data/"  --cpus 4 --memory 8192
+minikube start --v=4 --mount --mount-string="$PWD:/local-data/"  --cpus 4
 
 echo -ne "${grn}[+]Cleaning up Skaffold\n${end}"
 skaffold delete
